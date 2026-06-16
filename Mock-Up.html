@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green AI Interactive Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .dots::after {
+            content: '.';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60% { content: '...'; }
+            80%, 100% { content: ''; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans antialiased text-gray-800">
+
+    <div class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
+            <span class="font-bold text-lg text-emerald-600">ESSEC EMS² Thesis Prototype</span>
+            <div class="flex space-x-2">
+                <button onclick="switchScreen('screenA')" id="btn-screenA" class="px-4 py-2 rounded-md font-medium text-sm transition-colors bg-gray-900 text-white shadow">
+                    Screen A: Standard AI
+                </button>
+                <button onclick="switchScreen('screenB')" id="btn-screenB" class="px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white text-gray-700 hover:bg-gray-100 border">
+                    Screen B: Stealth Green AI
+                </button>
+                <button onclick="switchScreen('screenC')" id="btn-screenC" class="px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white text-gray-700 hover:bg-gray-100 border">
+                    Screen C: Corporate Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+
+        <div id="screenA" class="screen-content block">
+            <div class="mb-4 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-md">
+                <p class="text-sm text-blue-700 font-medium">Screen A: Standard AI Interface (Click "Send" to see how the standard model generates a heavy, verbose response with high latency and token costs)</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden flex h-[600px]">
+                <div class="w-64 bg-gray-900 text-gray-300 p-4 flex flex-col justify-between hidden md:flex">
+                    <div>
+                        <div class="border border-gray-700 rounded-md p-2 text-center text-sm cursor-pointer hover:bg-gray-800 transition-colors">
+                            + New Chat
+                        </div>
+                        <div class="mt-6 text-xs text-gray-500 font-bold tracking-wider">CHATS</div>
+                        <div class="mt-2 text-sm bg-gray-800 text-white p-2 rounded cursor-pointer truncate">
+                            New Campaign...
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-500">User: Business Manager</div>
+                </div>
+                
+                <div class="flex-1 flex flex-col justify-between bg-gray-50">
+                    <div id="chat-box-A" class="p-6 space-y-6 overflow-y-auto flex-1">
+                        <div class="flex items-start justify-end">
+                            <div class="bg-blue-600 text-white rounded-lg p-3 max-w-xl shadow-sm text-sm">
+                                Brainstorm some promotion ideas for our new product launch
+                            </div>
+                        </div>
+                        
+                        <div id="ai-response-A" class="hidden flex items-start">
+                            <div class="bg-white border border-gray-200 rounded-lg p-4 max-w-2xl shadow-sm text-sm text-gray-700 leading-relaxed w-full">
+                                <p class="font-bold text-gray-900 mb-2">AI Assistant</p>
+                                <p class="mb-3">That sounds like an incredibly exciting project! Brainstorming promotion ideas early in the product lifecycle is a highly critical step for ensuring market penetration. To maximize your visibility and ensure you reach your core target audience effectively, I have compiled a comprehensive, detailed list of promotional strategies. Here are three major initiatives to consider:</p>
+                                <ul class="list-decimal pl-5 space-y-3 mb-3">
+                                    <li><strong>Comprehensive Influencer Marketing Campaign</strong><br>Deploy a massive campaign focusing primarily on Instagram and TikTok by onboarding 10 to 15 micro-influencers (10k-50k followers) who align perfectly with your brand values to create authentic unboxing videos, user reviews, and video stories to generate rapid awareness</li>
+                                    <li><strong>Experiential Pop-up Store in Major Urban Areas</strong><br>Launch a temporary, highly aesthetic interactive pop-up exhibition in a premium downtown commercial hub, featuring exclusive early-bird discounts and photo booths designed specifically to trigger organic user-generated content and social media check-ins</li>
+                                    <li><strong>High-Volume Sampling Activation in Central Business Districts</strong><br>Analyze foot traffic data and schedule free sample kit distributions during peak lunch and evening commuting hours in office districts to minimize initial trial barriers and drive rapid direct-to-consumer conversions</li>
+                                </ul>
+                                <p>This represents an initial overview of strategic directions for your launch. Please let me know if you would like me to generate an even more extensive, long-form guide including detailed budget allocations, execution timelines, or specific buyer persona deep-dives for any of these options</p>
+                            </div>
+                        </div>
+                        
+                        <div id="loading-A" class="hidden flex items-center space-x-2 text-sm text-gray-500">
+                            <div class="animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent"></div>
+                            <span class="dots">AI is processing a general multipurpose response</span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 border-t border-gray-200 bg-white">
+                        <div class="flex items-center border border-gray-300 rounded-lg p-2 bg-gray-50">
+                            <input id="input-field-A" type="text" readonly value="Brainstorm some promotion ideas for our new product launch" class="w-full bg-transparent text-sm text-gray-700 outline-none px-2">
+                            <button id="send-btn-A" onclick="simulateScreenA()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-1.5 rounded text-sm font-medium transition-colors">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="screenB" class="screen-content hidden">
+            <div class="mb-4 bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-md">
+                <p class="text-sm text-emerald-700 font-medium">Screen B: Proposed Framework (Click "Send" to see the lightweight regex engine automatically detect the task and append green rules stealthily, generating a quick token-efficient response)</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden flex h-[600px]">
+                <div class="w-64 bg-gray-900 text-gray-300 p-4 flex flex-col justify-between hidden md:flex">
+                    <div>
+                        <div class="border border-gray-700 rounded-md p-2 text-center text-sm cursor-pointer hover:bg-gray-800 transition-colors">
+                            + New Chat
+                        </div>
+                        <div class="mt-6 text-xs text-gray-500 font-bold tracking-wider">CHATS</div>
+                        <div class="mt-2 text-sm bg-gray-800 text-white p-2 rounded cursor-pointer truncate">
+                            New Campaign...
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-500">User: Business Manager</div>
+                </div>
+                
+                <div class="flex-1 flex flex-col justify-between bg-gray-50">
+                    <div id="chat-box-B" class="p-6 space-y-6 overflow-y-auto flex-1">
+                        <div class="flex items-start justify-end">
+                            <div class="bg-blue-600 text-white rounded-lg p-3 max-w-xl shadow-sm text-sm">
+                                Brainstorm some promotion ideas for our new product launch
+                            </div>
+                        </div>
+
+                        <div id="middleware-log" class="hidden bg-slate-800 border border-slate-700 rounded-md p-3 max-w-xl mx-auto shadow-inner text-mono text-xs text-emerald-400 space-y-1 animate-pulse">
+                            <div class="flex items-center space-x-1">
+                                <span class="text-emerald-500 font-bold">[Stealth Core Logs]</span>
+                                <span>Scanning user prompt input structure...</span>
+                            </div>
+                            <div class="text-slate-400">-> Keyword Detected: <span class="text-amber-400">"Brainstorm"</span> (Ideation Task Category)</div>
+                            <div class="text-slate-400">-> Injecting optimized layout context silently...</div>
+                            <div class="text-white font-medium">Payload forwarded: User Prompt + <span class="text-emerald-300">"[Format: 3 bullet points, Max 50 words each]"</span></div>
+                        </div>
+                        
+                        <div id="ai-response-B" class="hidden flex items-start">
+                            <div class="bg-white border border-gray-200 rounded-lg p-4 max-w-2xl shadow-sm text-sm text-gray-700 leading-relaxed w-full">
+                                <div class="flex justify-between items-center mb-2">
+                                    <p class="font-bold text-gray-900">AI Assistant</p>
+                                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-medium">✓ Tokens & CO2 Optimized</span>
+                                </div>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>Micro-Influencer Content</strong>: Launch TikTok/Instagram campaigns to drive authentic product visibility</li>
+                                    <li><strong>Urban Pop-up Experiences</strong>: Set up premium interactive hubs to encourage social media sharing</li>
+                                    <li><strong>Office District Sampling</strong>: Distribute free kits during commute hours to lower trial barriers</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="loading-B" class="hidden flex items-center space-x-2 text-sm text-emerald-600">
+                            <div class="animate-spin rounded-full h-4 w-4 border-2 border-emerald-500 border-t-transparent"></div>
+                            <span class="dots">Routing optimized compressed prompt to API</span>
+                        </div>
+                    </div>
+
+                    <div class="p-4 border-t border-gray-200 bg-white">
+                        <div class="flex items-center justify-between mb-2 px-1">
+                            <div class="flex items-center space-x-1.5 text-xs text-emerald-600 font-medium">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                <span>Smart Optimizer: Automatically reducing API costs and CO2 emissions per prompt</span>
+                            </div>
+                            <div class="flex items-center space-x-1 text-xs text-gray-400">
+                                <span>Deactivate</span>
+                                <div class="w-7 h-4 bg-emerald-500 rounded-full p-0.5 cursor-pointer flex justify-end">
+                                    <div class="w-3 h-3 bg-white rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center border border-emerald-300 rounded-lg p-2 bg-emerald-50/30">
+                            <input id="input-field-B" type="text" readonly value="Brainstorm some promotion ideas for our new product launch" class="w-full bg-transparent text-sm text-gray-700 outline-none px-2">
+                            <button id="send-btn-B" onclick="simulateScreenB()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-1.5 rounded text-sm font-medium transition-colors shadow-sm shadow-emerald-200">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="screenC" class="screen-content hidden">
+            <div class="mb-4 bg-purple-50 border-l-4 border-purple-500 p-4 rounded-r-md">
+                <p class="text-sm text-purple-700 font-medium">Screen C: Corporate Governance Dashboard (Aggregates background token savings into financial and ESG value for management)</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-between">
+                    <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">Total GenAI Requests</span>
+                    <div class="flex items-baseline mt-2">
+                        <span class="text-2xl font-bold text-gray-900">15,400</span>
+                        <span class="text-xs text-gray-500 ml-1">queries / mo</span>
+                    </div>
+                    <span class="text-xs text-gray-400 mt-2">Total company-wide AI usage</span>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-between">
+                    <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">Total Saved Tokens</span>
+                    <div class="flex items-baseline mt-2">
+                        <span class="text-2xl font-bold text-indigo-600">6,200,000</span>
+                        <span class="text-xs text-gray-500 ml-1">Tokens</span>
+                    </div>
+                    <span class="text-xs text-emerald-600 font-medium mt-2">+12% optimization vs last month</span>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-emerald-200 bg-emerald-50/10 shadow-sm flex flex-col justify-between">
+                    <span class="text-xs font-bold text-emerald-700 tracking-wider uppercase">Saved API Expenses (Financial ROI)</span>
+                    <div class="flex items-baseline mt-2">
+                        <span class="text-2xl font-bold text-emerald-600">~$310</span>
+                        <span class="text-xs text-emerald-600 font-bold ml-1">USD</span>
+                    </div>
+                    <span class="text-xs text-emerald-600 font-medium mt-2">18% reduction in monthly AI expenses</span>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-teal-200 bg-teal-50/10 shadow-sm flex flex-col justify-between">
+                    <span class="text-xs font-bold text-teal-700 tracking-wider uppercase">CO2 Mitigated (Scope 3)</span>
+                    <div class="flex items-baseline mt-2">
+                        <span class="text-2xl font-bold text-teal-600">~12.4</span>
+                        <span class="text-xs text-teal-500 ml-1">kg CO2eq</span>
+                    </div>
+                    <span class="text-xs text-teal-600 font-medium mt-2">Equivalent to driving a gasoline car ~50km</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 class="font-bold text-gray-800 text-sm mb-6 uppercase tracking-wider">Savings Breakdown by Department (API Cost & CO2)</h3>
+                <div class="space-y-5">
+                    <div>
+                        <div class="flex justify-between text-xs font-medium text-gray-600 mb-1">
+                            <span>Marketing Department</span>
+                            <span class="text-emerald-600 font-bold">$145 Saved / 5.8 kg CO2 Mitigated</span>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-3">
+                            <div class="bg-emerald-500 h-3 rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-medium text-gray-600 mb-1">
+                            <span>Sales & Commercial Department</span>
+                            <span class="text-emerald-600 font-bold">$98 Saved / 3.9 kg CO2 Mitigated</span>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-3">
+                            <div class="bg-emerald-500 h-3 rounded-full" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-medium text-gray-600 mb-1">
+                            <span>HR & Operations Department</span>
+                            <span class="text-emerald-600 font-bold">$67 Saved / 2.7 kg CO2 Mitigated</span>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-3">
+                            <div class="bg-emerald-500 h-3 rounded-full" style="width: 40%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 border-t border-gray-100 pt-4 flex justify-end text-xs text-gray-400">
+                    * Calculation baseline: Based on EcoLogits bottom-up life-cycle assessment (LCA) methodology
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen-content').forEach(el => {
+                el.classList.replace('block', 'hidden');
+            });
+            document.getElementById(screenId).classList.replace('hidden', 'block');
+
+            const buttons = ['screenA', 'screenB', 'screenC'];
+            buttons.forEach(id => {
+                const btn = document.getElementById('btn-' + id);
+                if (id === screenId) {
+                    btn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors bg-gray-900 text-white shadow";
+                } else {
+                    btn.className = "px-4 py-2 rounded-md font-medium text-sm transition-colors bg-white text-gray-700 hover:bg-gray-100 border";
+                }
+            });
+        }
+
+        // Screen A Simulation: Long response time and verbose output
+        function simulateScreenA() {
+            const sendBtn = document.getElementById('send-btn-A');
+            const loading = document.getElementById('loading-A');
+            const response = document.getElementById('ai-response-A');
+            const chatBox = document.getElementById('chat-box-A');
+
+            sendBtn.disabled = true;
+            sendBtn.classList.replace('bg-blue-600', 'bg-gray-400');
+            response.classList.add('hidden');
+            loading.classList.remove('hidden');
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Simulating a heavier computing delay (1.8 seconds)
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                response.classList.remove('hidden');
+                chatBox.scrollTop = chatBox.scrollHeight;
+                sendBtn.disabled = false;
+                sendBtn.classList.replace('bg-gray-400', 'bg-blue-600');
+            }, 1800);
+        }
+
+        // Screen B Simulation: Lightweight validation, swift routing, compressed response
+        function simulateScreenB() {
+            const sendBtn = document.getElementById('send-btn-B');
+            const log = document.getElementById('middleware-log');
+            const loading = document.getElementById('loading-B');
+            const response = document.getElementById('ai-response-B');
+            const chatBox = document.getElementById('chat-box-B');
+
+            sendBtn.disabled = true;
+            sendBtn.className = "bg-gray-400 text-white px-5 py-1.5 rounded text-sm font-medium transition-colors";
+            response.classList.add('hidden');
+            
+            // Phase 1: Dynamic Regex/Keyword Log Pops up instantly
+            log.classList.remove('hidden');
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Phase 2: After 800ms, forward to API with minimized token window
+            setTimeout(() => {
+                log.classList.add('hidden');
+                loading.classList.remove('hidden');
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 900);
+
+            // Phase 3: Fast execution delivery due to short output length limit
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                response.classList.remove('hidden');
+                chatBox.scrollTop = chatBox.scrollHeight;
+                sendBtn.disabled = false;
+                sendBtn.className = "bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-1.5 rounded text-sm font-medium transition-colors shadow-sm shadow-emerald-200";
+            }, 1700);
+        }
+    </script>
+</body>
+</html>
